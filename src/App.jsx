@@ -39,8 +39,6 @@ function App() {
     const pos = [];
     const newAnswer = answer;
 
-    console.log(char)
-
     arr.forEach((el, i) => {
         if(el.toUpperCase() === char.toUpperCase()) {
             pos.push(i)
@@ -73,7 +71,12 @@ function App() {
         player1Ref.current.value = ""
         if(answer.every(el => el != 1)) {
           setPoints(points => ({...points, player1: points.player1 + 1}))
-          setQuestionPos(count => count + 1)
+          setQuestionPos(count => {
+            if(count == 9) {
+              return 0
+            }
+            return count + 1
+          })
           setErrorPlayer1(0)
           setErrorPlayer2(0)
         }
@@ -82,7 +85,12 @@ function App() {
         player2Ref.current.value = ""
         if(answer.every(el => el != 1)) {
           setPoints(points => ({...points, player2: points.player2 + 1}))
-          setQuestionPos(count => count + 1)
+          setQuestionPos(count => {
+            if(count == 9) {
+              return 0
+            }
+            return count + 1
+          })
           setErrorPlayer1(0)
           setErrorPlayer2(0)
         }
@@ -91,7 +99,8 @@ function App() {
   }
 
   return (
-    <div className='flex flex-col w-full justify-center items-center gap-5'>
+    <div className='flex flex-col w-full justify-center items-center gap-4'>
+      <span>Pregunta #{questionPos + 1}</span>
       <header>
         <span className='text-2xl font-bold'>Turno del: Equipo #{turn}</span>
         <p className='text-4xl my-3'>{'"' + question.question + '"'}</p>
